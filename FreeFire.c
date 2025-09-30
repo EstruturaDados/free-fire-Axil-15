@@ -33,10 +33,13 @@ int main (){
             }
             printf("\n--- Cadastro do item %d ---\n", quantidadeItens + 1);
             printf("Nome: ");
-            scanf("%s", meuItem[quantidadeItens].nome); //nao perimite espaços
+            getchar(); // limpa buffer do teclado
+            fgets(meuItem[quantidadeItens].nome, sizeof (meuItem[quantidadeItens].nome), stdin); //permite espaços
+            meuItem[quantidadeItens].nome[strcspn(meuItem[quantidadeItens].nome, "\n")] = '\0'; // remove '\n'
            
             printf("Tipo: ");
-            scanf("%s", meuItem[quantidadeItens].tipo); //nao permite espaços
+            fgets(meuItem[quantidadeItens].nome, sizeof (meuItem[quantidadeItens].nome), stdin); //permite espaços
+            meuItem[quantidadeItens].nome[strcspn(meuItem[quantidadeItens].nome, "\n")] = '\0'; // remove '\n'
            
             printf("Quantidade: ");
             scanf("%d", &meuItem[quantidadeItens]. quantidade);
