@@ -4,21 +4,33 @@
 #include <stdbool.h>
 #define TAMANHO_MAX 10 // definir um tamanho p/ cadastro nao passar de 10 itens
 
-// criação de struct para o programa
+// primeira struct para vetor
 struct Item {
     char nome [30];
     char tipo [20];
     int quantidade;
 };
 
-int main (){
+// struct para lista encadeada
+struct No {
+    struct Item dados;  // armazena os dados do item
+    struct No* proximo;  // ponteiro para o próximo nó
+};
+
+void inserirLista(struct No** mochila, struct Item novoItem);
+void listarLista(struct No* mochil);
+bool removerLista(struct No** mochila, const char* nome);
+struct No* buscarLista(struct No* mochila, const char* nome);
+
+//submenu vetor
+void menuVetor(){
     struct Item meuItem[TAMANHO_MAX];
     int quantidadeItens = 0;
     int opcao;
-   
-   //criação do menu do programa com opcoes selecionaveis
+
+    //criação do menu para a mochilar vetor com opcoes selecionaveis
     while (1){
-        printf("\n--- MENU ---\n");
+        printf("\n--- MENU (Vetor) ---\n");
         printf("1. Cadastrar item\n");
         printf("2. Listar itens\n");
         printf("3. Excluir itens\n");
@@ -38,8 +50,8 @@ int main (){
             meuItem[quantidadeItens].nome[strcspn(meuItem[quantidadeItens].nome, "\n")] = '\0'; // remove '\n'
            
             printf("Tipo: ");
-            fgets(meuItem[quantidadeItens].nome, sizeof (meuItem[quantidadeItens].nome), stdin); //permite espaços
-            meuItem[quantidadeItens].nome[strcspn(meuItem[quantidadeItens].nome, "\n")] = '\0'; // remove '\n'
+            fgets(meuItem[quantidadeItens].tipo, sizeof (meuItem[quantidadeItens].tipo), stdin); //permite espaços
+            meuItem[quantidadeItens].tipo[strcspn(meuItem[quantidadeItens].tipo, "\n")] = '\0'; // remove '\n'
            
             printf("Quantidade: ");
             scanf("%d", &meuItem[quantidadeItens]. quantidade);
@@ -87,8 +99,50 @@ int main (){
         else {
             printf ("Opção inválida!");
         }
+
     }
-   
+}
+
+void menuLista(){
+    struct No* mochila = NULL;
+    int opcao;
+
+    while(1){
+                printf("\n--- MENU (Lista Encadeada) ---\n");
+        printf("1. Cadastrar item\n");
+        printf("2. Listar itens\n");
+        printf("3. Excluir itens\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcao);
+
+        //adicionar as funcoes da lista
+    }
+
+}
+
+int main() {
+    int opcaoPrincipal;
+
+    while (1) {
+        printf("\n--- MENU PRINCIPAL ---\n");
+        printf("1. Mochila com vetor\n");
+        printf("2. Mochila com lista encadeada\n");
+        printf("0. Sair\n");
+        printf("Escolha uma opção: ");
+        scanf("%d", &opcaoPrincipal);
+
+        if (opcaoPrincipal == 1) {
+            menuVetor();
+        } else if (opcaoPrincipal == 2) {
+            menuLista();
+        } else if (opcaoPrincipal == 0) {
+            printf("Saindo...\n");
+            break;
+        } else {
+            printf("Opção inválida!\n");
+        }
+    }
 
     return 0;
 }
