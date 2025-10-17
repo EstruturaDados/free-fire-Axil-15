@@ -18,7 +18,7 @@ struct No {
 };
 
 void inserirLista(struct No** mochila, struct Item novoItem);
-void listarLista(struct No* mochil);
+void listarLista(struct No* mochila);
 bool removerLista(struct No** mochila, const char* nome);
 struct No* buscarLista(struct No* mochila, const char* nome);
 
@@ -67,30 +67,58 @@ void menuVetor(){
             for (int i = 0; i <quantidadeItens; i++){
                 printf("%d. Nome: %s | Tipo: %s | Quantidade: %d\n", i + 1, meuItem[i].nome, meuItem[i].tipo, meuItem[i].quantidade);
             }
-       
-        }    
+           
         else if (opcao == 3){
             if (quantidadeItens == 0){
                 printf("Nenhum item para excluir");
                 continue;
             }
             int excluir;
-            printf("\nDigite p número do item a excluir (1 a %d): ", quantidadeItens);
-            scanf ("%d", &excluir);
-           
-            if (excluir < 1 || excluir > quantidadeItens){
-                printf ("Número invalido!\n");
-                continue;
-            }
+            char nomeExcluir[30];
+            printf("\nDigite o nome do item ou o número a excluir (1 a %d): ", quantidadeItens);
+            getchar(); //limpa buffer
+            fgets(nomeExcluir, sizeof(nomeExcluir), stdin);
+            nomeExcluir[strcspn(nomeExcluir, "\n")] = '\0';
+            
+            // se for um numero
+            if (isdigit(nomeExcluir[0])) {
+                excluir = atoi(nomeExcluir); // converte para inteiro
+                
+                if (excluir < 1) {
+                    printf("Número inválido! Digite um valor entre 1 e %d.\n", quantidadeItens);
+                    continue;
+                }    
            
             excluir --;
-           
             //deslocar itens para "tapar buracos"
             for (int i = excluir; i < quantidadeItens - 1; i++){
                 meuItem[i] = meuItem [i+1];
             }
             quantidadeItens --; //diminui quantidade de itens
             printf ("Item excluido com sucessso.\n");
+            }
+            
+        // se for nome
+        else{
+            bool encontrado = false;
+            for (int i = 0; i < quantidadeItens; i++) {
+                if (strcmp(meuItem[i].nome, nomeExcluir) == 0){
+                    for (int j = i; j <quantidadeItens - 1; j++){
+                        meuItem[j] = meuItem[j + 1];
+                    }
+                    quantidadeItens--;
+                    printf ("Item '%s' excluido com sucesso \n", nomeExcluir);
+                    encontrado = true;
+                    break;
+                }
+            }   
+            if (!encontrado){
+                printf ("Item '%s' não encontrado.\n", nomeExcluir);
+            }
+        }    
+                
+            
+    }
         }
         else if (opcao == 0){
             printf ("Saindo...\n");
