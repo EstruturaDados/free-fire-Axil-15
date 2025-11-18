@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <stdbool.h>
-#include <ctype.h>   // necessário para isdigit()
+#include <ctype.h>   
 #define TAMANHO_MAX 10
 
 struct Item {
